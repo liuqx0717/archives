@@ -1,0 +1,499 @@
+A51 MACRO ASSEMBLER  KEYS                                                                 11/15/2017 18:41:38 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.5.0
+OBJECT MODULE PLACED IN .\Objects\Keys.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE asm\Keys.asm NOMOD51 SET(SMALL) DEBUG PRINT(.\Listings\Keys.lst) OBJECT
+                      (.\Objects\Keys.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;CallBack:
+
+                       2     ;    Keys_CB
+
+                       3     ;        arguments:
+
+                       4     ;            08H  key code
+
+                       5     
+
+                       6     
+
+                       7     ;$include (GlobalVars.inc)
+
+                +1     8     ; 08H~1FH:  local variables(arguments) & global variables
+
+                +1     9     ; 20H~27H:  bits (00H~3FH)
+
+                +1    10     ; 30H~7FH:  stack & global variables
+
+                +1    11     
+
+                +1    12     ; A,B,C:      volatile
+
+                +1    13     
+
+                +1    14     
+
+  0018          +1    15     Timer_CNT1                      EQU             18H
+
+  001F          +1    16     Timer_CNT8                      EQU             1FH
+
+                +1    17             
+
+                +1    18     
+
+  0017          +1    19     Timer_CTRL                      EQU             17H      ;H |1|2|3|4|5|6|7|8| L
+
+                +1    20             
+
+  0016          +1    21     LEDs_Pattern            EQU             16H
+
+                +1    22             
+
+  0015          +1    23     Keys_LastCode           EQU             15H
+
+                +1    24             
+
+  0014          +1    25     Beep_Count                      EQU             14H
+
+  0013          +1    26     Beep_Total                      EQU             13H
+
+  0012          +1    27     Beep_State                      EQU             12H
+
+                +1    28             
+
+  0011          +1    29     g_Digit1                        EQU             11H       ;Digit1~2
+
+  0010          +1    30     g_Digit2                        EQU             10H       ;Digit3~4
+
+                +1    31     
+
+  007F          +1    32     TEST3_MainState         EQU             7FH
+
+                +1    33     
+
+  007E          +1    34     PASSWORD_State          EQU             7EH
+
+  007D          +1    35     PASSWORD_PSW1           EQU             7DH
+
+  007C          +1    36     PASSWORD_PSW2           EQU             7CH
+
+  007B          +1    37     HOMEWORK_Count          EQU             7BH
+
+  007A          +1    38     HOMEWORK_Second1        EQU             7AH
+
+  0079          +1    39     HOMEWORK_Second2        EQU             79H
+
+  0078          +1    40     HOMEWORK_Second3        EQU             78H
+
+  0077          +1    41     HOMEWORK_Second         EQU             77H
+
+  0076          +1    42     CALCULATE_NUM           EQU             76H
+
+  0075          +1    43     CALCULATE_1                     EQU             75H
+
+  0074          +1    44     CALCULATE_2                     EQU             74H
+
+                +1    45     
+
+                +1    46     
+
+                +1    47     
+
+  0020          +1    48     g_LEDs                          EQU             20H
+
+  0000          +1    49     g_LED1                          BIT             00H
+
+  0001          +1    50     g_LED2                          BIT             01H
+
+  0002          +1    51     g_LED3                          BIT             02H
+
+  0003          +1    52     g_LED4                          BIT             03H
+
+  0004          +1    53     g_LED5                          BIT             04H
+
+  0005          +1    54     g_LED6                          BIT             05H
+
+  0006          +1    55     g_LED7                          BIT             06H
+
+  0007          +1    56     g_LED8                          BIT             07H
+
+                +1    57             
+
+A51 MACRO ASSEMBLER  KEYS                                                                 11/15/2017 18:41:38 PAGE     2
+
+  0008          +1    58     INT_C_old                       BIT             08H
+
+                +1    59             
+
+  0009          +1    60     INIT_KeLED                      BIT             09H
+
+  0010          +1    61     INIT_KeBeep                     BIT             10H
+
+  0011          +1    62     INIT_KeKeys                     BIT             11H
+
+  0012          +1    63     INIT_LED                        BIT             12H
+
+  0013          +1    64     INIT_Beep                       BIT             13H
+
+  0014          +1    65     INIT_Timer                      BIT             14H
+
+  0015          +1    66     INIT_KeTimer2           BIT             15H
+
+  0016          +1    67     INIT_KeLEDs                     BIT             16H
+
+  0017          +1    68     INIT_LEDs                       BIT             17H
+
+  0018          +1    69     INIT_Keys                       BIT             18H
+
+  0019          +1    70     INIT_KeDigits           BIT             19H
+
+  001A          +1    71     INIT_Digits                     BIT             1AH
+
+                +1    72     ;INIT_
+
+                +1    73     ;INIT_
+
+                +1    74     ;INIT_
+
+                +1    75     ;INIT_
+
+                +1    76     
+
+  0024          +1    77     Digits_State            EQU             24H    
+
+  0020          +1    78     Digits_State7           BIT             20H
+
+  0027          +1    79     Digits_State0           BIT             27H
+
+                +1    80             
+
+  0025          +1    81     g_DigitState            EQU             25H       ;H |S41|S40|S31|S30|S21|S20|S11|S10|
+
+  0028          +1    82     g_DigitState7           BIT             28H           ;Sn1 Sn0:
+
+  002F          +1    83     g_DigitState0           BIT             2FH               ;    00normal  01dp  10 light  11
+                              close
+
+                +1    84             
+
+  0026          +1    85     Digits_LastState        EQU             26H
+
+  0030          +1    86     Digits_LastState0       BIT             30H
+
+  0037          +1    87     Digits_LastState7       BIT             37H
+
+                +1    88             
+
+  0027          +1    89     HOMEWORK_State          EQU             27H
+
+  0038          +1    90     HOMEWORK_State7         BIT             38H
+
+  003F          +1    91     HOMEWORK_State0         BIT             3FH
+
+  0040          +1    92     CAL_STATE1                      BIT             40H
+
+  0041          +1    93     CAL_STATE2                      BIT             41H
+
+  0042          +1    94     CAL_STATE3                      BIT             42H
+
+                +1    95     
+
+                      96     
+
+                      97     ;$include (KeKeys.inc)
+
+                +1    98     EXTRN   CODE    (KeKeys_Init)
+
+                +1    99     
+
+                +1   100     ;summary
+
+                +1   101     ;    detects which key is pressed down
+
+                +1   102     ;return value
+
+                +1   103     ;    the key code (00~09 means num0~9, 10~15 means F1~6, 0FFH means no key)
+
+                +1   104     EXTRN   CODE    (KeKeys_Scan)
+
+                +1   105             
+
+                +1   106             
+
+                     107     
+
+                     108     
+
+                     109     ;$include (Timer.inc)
+
+                +1   110     ;Timer_0 will start immediately
+
+                +1   111     ;Timer_n(1~8) will start only after you call the Timer_Start function
+
+                +1   112     ;Timer_0 cannot be stopped by Timer_Stop function
+
+                +1   113     EXTRN   CODE    (Timer_Init)
+
+                +1   114             
+
+                +1   115             
+
+                +1   116             
+
+                +1   117     ;arguments:
+
+                +1   118     ;    08H  n
+
+                +1   119     ;return:
+
+                +1   120     ;    returns 0 if Timer_n is not running
+
+                +1   121     EXTRN   CODE    (Timer_CheckCTRL)
+
+                +1   122             
+
+A51 MACRO ASSEMBLER  KEYS                                                                 11/15/2017 18:41:38 PAGE     3
+
+                +1   123             
+
+                +1   124             
+
+                +1   125     ;arguments:
+
+                +1   126     ;    08H  n
+
+                +1   127     EXTRN   CODE    (Timer_Start)
+
+                +1   128             
+
+                +1   129             
+
+                +1   130             
+
+                +1   131     ;arguments:
+
+                +1   132     ;    08H  n
+
+                +1   133     EXTRN   CODE    (Timer_Stop)
+
+                     134     
+
+                     135             
+
+                     136             
+
+                     137     PUBLIC  Timer_0
+
+                     138     PUBLIC  Keys_Init
+
+                     139     
+
+                     140             
+
+                     141             
+
+                     142     EXTRN   CODE    (Keys_CB)
+
+                     143             
+
+                     144             
+
+                     145     KEYS    SEGMENT CODE
+
+----                 146                     RSEG    KEYS
+
+                     147                     
+
+                     148                     
+
+                     149     
+
+0000                 150     Keys_Init:
+
+0000 20180B          151                     JB              INIT_Keys,FinishInit
+
+0003 D218            152                     SETB    INIT_Keys
+
+                     153                     
+
+0005 120000   F      154                     LCALL   KeKeys_Init
+
+0008 120000   F      155                     LCALL   Timer_Init
+
+                     156                     
+
+000B 7515FF          157                     MOV             Keys_LastCode,#0FFH
+
+                     158                     
+
+                     159                     
+
+000E                 160     FinishInit:
+
+000E 22              161                     RET
+
+                     162                     
+
+                     163                     
+
+                     164                     
+
+                     165                     
+
+                     166                     
+
+                     167                     
+
+                     168                     
+
+                     169                     
+
+                     170     ; 20ms
+
+000F                 171     Timer_0:
+
+000F C008            172                     PUSH    08H
+
+0011 120000   F      173                     LCALL   KeKeys_Scan
+
+0014 F508            174                     MOV             08H,A
+
+0016 C3              175                     CLR             C
+
+0017 94FF            176                     SUBB    A,#0FFH
+
+0019 600A            177                     JZ              FINISH                                                  ;If
+                              current code is 0FFH(no key), goto FINISH
+
+001B E508            178                     MOV             A,08H
+
+001D B51502          179                     CJNE    A,Keys_LastCode,GENERATE                ; If current code is differ
+                             ent from last code, goto GENERATE
+
+0020 8003            180                     SJMP    FINISH
+
+0022                 181     GENERATE:
+
+0022 120000   F      182                     LCALL   Keys_CB
+
+0025                 183     FINISH:
+
+0025 850815          184                     MOV             Keys_LastCode,08H
+
+0028 D008            185                     POP             08H
+
+002A 22              186                     RET
+
+A51 MACRO ASSEMBLER  KEYS                                                                 11/15/2017 18:41:38 PAGE     4
+
+                     187     
+
+                     188     
+
+                     189     
+
+                     190     
+
+                     191     
+
+                     192     
+
+                     193     
+
+                     194     
+
+                     195     
+
+                     196                     END
+
+A51 MACRO ASSEMBLER  KEYS                                                                 11/15/2017 18:41:38 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+BEEP_COUNT . . . .  N NUMB   0014H   A   
+BEEP_STATE . . . .  N NUMB   0012H   A   
+BEEP_TOTAL . . . .  N NUMB   0013H   A   
+CALCULATE_1. . . .  N NUMB   0075H   A   
+CALCULATE_2. . . .  N NUMB   0074H   A   
+CALCULATE_NUM. . .  N NUMB   0076H   A   
+CAL_STATE1 . . . .  B ADDR   0028H.0 A   
+CAL_STATE2 . . . .  B ADDR   0028H.1 A   
+CAL_STATE3 . . . .  B ADDR   0028H.2 A   
+DIGITS_LASTSTATE .  N NUMB   0026H   A   
+DIGITS_LASTSTATE0.  B ADDR   0026H.0 A   
+DIGITS_LASTSTATE7.  B ADDR   0026H.7 A   
+DIGITS_STATE . . .  N NUMB   0024H   A   
+DIGITS_STATE0. . .  B ADDR   0024H.7 A   
+DIGITS_STATE7. . .  B ADDR   0024H.0 A   
+FINISH . . . . . .  C ADDR   0025H   R   SEG=KEYS
+FINISHINIT . . . .  C ADDR   000EH   R   SEG=KEYS
+GENERATE . . . . .  C ADDR   0022H   R   SEG=KEYS
+G_DIGIT1 . . . . .  N NUMB   0011H   A   
+G_DIGIT2 . . . . .  N NUMB   0010H   A   
+G_DIGITSTATE . . .  N NUMB   0025H   A   
+G_DIGITSTATE0. . .  B ADDR   0025H.7 A   
+G_DIGITSTATE7. . .  B ADDR   0025H.0 A   
+G_LED1 . . . . . .  B ADDR   0020H.0 A   
+G_LED2 . . . . . .  B ADDR   0020H.1 A   
+G_LED3 . . . . . .  B ADDR   0020H.2 A   
+G_LED4 . . . . . .  B ADDR   0020H.3 A   
+G_LED5 . . . . . .  B ADDR   0020H.4 A   
+G_LED6 . . . . . .  B ADDR   0020H.5 A   
+G_LED7 . . . . . .  B ADDR   0020H.6 A   
+G_LED8 . . . . . .  B ADDR   0020H.7 A   
+G_LEDS . . . . . .  N NUMB   0020H   A   
+HOMEWORK_COUNT . .  N NUMB   007BH   A   
+HOMEWORK_SECOND. .  N NUMB   0077H   A   
+HOMEWORK_SECOND1 .  N NUMB   007AH   A   
+HOMEWORK_SECOND2 .  N NUMB   0079H   A   
+HOMEWORK_SECOND3 .  N NUMB   0078H   A   
+HOMEWORK_STATE . .  N NUMB   0027H   A   
+HOMEWORK_STATE0. .  B ADDR   0027H.7 A   
+HOMEWORK_STATE7. .  B ADDR   0027H.0 A   
+INIT_BEEP. . . . .  B ADDR   0022H.3 A   
+INIT_DIGITS. . . .  B ADDR   0023H.2 A   
+INIT_KEBEEP. . . .  B ADDR   0022H.0 A   
+INIT_KEDIGITS. . .  B ADDR   0023H.1 A   
+INIT_KEKEYS. . . .  B ADDR   0022H.1 A   
+INIT_KELED . . . .  B ADDR   0021H.1 A   
+INIT_KELEDS. . . .  B ADDR   0022H.6 A   
+INIT_KETIMER2. . .  B ADDR   0022H.5 A   
+INIT_KEYS. . . . .  B ADDR   0023H.0 A   
+INIT_LED . . . . .  B ADDR   0022H.2 A   
+INIT_LEDS. . . . .  B ADDR   0022H.7 A   
+INIT_TIMER . . . .  B ADDR   0022H.4 A   
+INT_C_OLD. . . . .  B ADDR   0021H.0 A   
+KEKEYS_INIT. . . .  C ADDR   -----       EXT
+KEKEYS_SCAN. . . .  C ADDR   -----       EXT
+KEYS . . . . . . .  C SEG    002BH       REL=UNIT
+KEYS_CB. . . . . .  C ADDR   -----       EXT
+KEYS_INIT. . . . .  C ADDR   0000H   R   SEG=KEYS
+KEYS_LASTCODE. . .  N NUMB   0015H   A   
+LEDS_PATTERN . . .  N NUMB   0016H   A   
+A51 MACRO ASSEMBLER  KEYS                                                                 11/15/2017 18:41:38 PAGE     6
+
+PASSWORD_PSW1. . .  N NUMB   007DH   A   
+PASSWORD_PSW2. . .  N NUMB   007CH   A   
+PASSWORD_STATE . .  N NUMB   007EH   A   
+TEST3_MAINSTATE. .  N NUMB   007FH   A   
+TIMER_0. . . . . .  C ADDR   000FH   R   SEG=KEYS
+TIMER_CHECKCTRL. .  C ADDR   -----       EXT
+TIMER_CNT1 . . . .  N NUMB   0018H   A   
+TIMER_CNT8 . . . .  N NUMB   001FH   A   
+TIMER_CTRL . . . .  N NUMB   0017H   A   
+TIMER_INIT . . . .  C ADDR   -----       EXT
+TIMER_START. . . .  C ADDR   -----       EXT
+TIMER_STOP . . . .  C ADDR   -----       EXT
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

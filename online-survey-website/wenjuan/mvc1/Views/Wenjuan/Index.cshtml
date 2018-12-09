@@ -1,0 +1,981 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script src="/Content/Wenjuan/jquery-3.1.0.min.js">
+$.ajaxSetup({cache:true});
+</script>
+<!--headerfont： "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>@ViewBag.Title</title>
+<style type="text/css">
+
+.b{
+	//border: 1px solid #FF0000;
+}
+
+#background {
+	position: fixed;
+	top:0px;
+	left:0px;
+	overflow: hidden;
+	text-align: center;
+	height: 100%;
+	width: 100%;
+}
+
+#covertext {
+	position: absolute; 
+	left: 0px; 
+	top: 0px; 
+	height: 100%;
+	width: 100%;
+	-webkit-transition: margin-left 600ms ease 0s;
+	-moz-transition: margin-left 600ms ease 0s;
+	-ms-transition: margin-left 600ms ease 0s;
+	-o-transition: margin-left 600ms ease 0s;
+	transition: margin-left 600ms ease 0s;		
+}
+
+html,body{ 
+margin:0px; 
+height:100%;
+width:100%; 
+font-family:"Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;
+}
+
+.headersfont {
+	font-family:  "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+	font-size: 3.5em;
+}
+#background p {
+	color: #FFF;
+	margin-left:1em;
+	margin-right:1em;
+}
+
+#button {
+	position: absolute;
+	font-size: 2em;
+	font-weight:300;
+	text-align: center;
+	border: 2px solid #FFF;
+	color: #FFF;
+	width: 8em;
+	height:1.5em;
+	background-color: rgba(0, 0, 0, 0);
+	cursor: default;
+	//padding-top:0.1em;
+	//padding-bottom:0.1em;
+	vertical-align:central;
+	/*background-color: rgb(0, 0, 0);  
+	filter: alpha(opacity=0); */
+}
+
+
+
+
+
+
+
+#maindiv {
+	position: absolute;
+	top: -1em;
+	opacity: 0;
+	word-wrap: break-word;
+	overflow: hidden;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	font-size: 1.2em;
+	color: #FFFFFF;
+	-webkit-transition: top 600ms ease 0s, opacity 600ms ease 0s;
+	-moz-transition: top 600ms ease 0s, opacity 600ms ease 0s;
+	-ms-transition: top 600ms ease 0s, opacity 600ms ease 0s;
+	-o-transition: top 600ms ease 0s, opacity 600ms ease 0s;
+	transition: top 600ms ease 0s, opacity 600ms ease 0s;
+}
+
+.buttonouter{
+	cursor: default;
+	vertical-align: central;
+	position: relative;
+	width: 100%;
+	height: 3.1em;
+	color: #FFFFFF;
+	transform:rotateX(90deg);
+	-webkit-transition: transform 500ms ease;
+	-moz-transition: -moz-transform 500ms ease;
+	-ms-transition: transform 500ms ease;
+	-o-transition: transform 500ms ease;
+	transition: transform 500ms ease;
+}
+
+.buttoninner{
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:100%;
+	height:100%;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:rgba(255,255,255,0.2);
+	transform:skewX(155deg);
+}
+
+.buttontext {
+	position:relative; 
+	width:90%; 
+	margin-left:auto; 
+	margin-right:auto;
+	padding-top:0.5em;
+	padding-bottom:0.5em;
+}
+
+#numbertd,#questiontd{
+	position: relative;
+	top: -1em;
+	opacity: 0;
+	-webkit-transition: opacity 500ms ease 0s, top 500ms ease;
+	-moz-transition: opacity 500ms ease 0s, top 500ms ease;
+	-ms-transition: opacity 500ms ease 0s, top 500ms ease;
+	-o-transition: opacity 500ms ease 0s, top 500ms ease;
+	transition: opacity 500ms ease 0s, top 500ms ease;
+}
+
+#o24{
+	position: relative;
+	cursor: default;
+	opacity: 0;
+	top:-1em;
+	-webkit-transition: opacity 500ms ease 0s, top 500ms ease;
+	-moz-transition: opacity 500ms ease 0s, top 500ms ease;
+	-ms-transition: opacity 500ms ease 0s, top 500ms ease;
+	-o-transition: opacity 500ms ease 0s, top 500ms ease;
+	transition: opacity 500ms ease 0s, top 500ms ease;
+}
+
+#optionstitle{
+	position: relative;
+	opacity: 0;
+	top:-1em;
+	-webkit-transition: opacity 500ms ease 0s, top 500ms ease;
+	-moz-transition: opacity 500ms ease 0s, top 500ms ease;
+	-ms-transition: opacity 500ms ease 0s, top 500ms ease;
+	-o-transition: opacity 500ms ease 0s, top 500ms ease;
+	transition: opacity 500ms ease 0s, top 500ms ease;
+}
+
+</style></head>
+
+<body>
+
+<div id="hiddendiv" style="border: 1px solid #FF0000;position:static;height:1em;width:52.5em; visibility:hidden">@ViewBag.Token</div>
+<script>
+var __debug = false;
+var _token = document.getElementById("hiddendiv").innerHTML;
+
+var _w,_h;
+var _ie=false;
+var _state=0;
+var _i=0;
+
+var _n=24;
+var _n_addi=1;
+var _max_o=10;
+var _new=false;
+var _rm=false;
+
+var _q=new Array(_n+1);
+var _mul=new Array(_n+1);
+var _a = new Array(_n_addi + 1); for (var i = 0; i <= _n; i++) _a[i] = 0;
+var _a_addi=new Array(); 
+
+_mul[1]=0; _q[1]="您的性别是";
+_mul[2]=0; _q[2]="您睡前大概使用多长时间的手机？";
+_mul[3]=1; _q[3]="您使用手机最主要是用来（选2项）";
+_mul[4]=0; _q[4]="上课时没事你是否会玩手机？";
+_mul[5]=0; _q[5]="经常给“就在身边”的人打电话或发消息吗？";
+_mul[6]=0; _q[6]="您是否习惯于与他人进行眼神交流？";
+_mul[7]=1; _q[7]="下述情况有哪些是经常发生的？（多选）";
+_mul[8]=0; _q[8]="与朋友聚会时您使用手机的情况？";
+_mul[9]=0; _q[9]="当有人给您发信息时，您一般过多长时间可以看到？";
+_mul[10]=0; _q[10]="您最近一次长时间与朋友（同班同学除外）面对面聊天大概是多久以前？";
+_mul[11]=0; _q[11]="自习时或做作业时您会将手机放在旁边吗？";
+_mul[12]=0; _q[12]="您经常关注加入的群里面的消息吗？";
+_mul[13]=1; _q[13]="下述情况有哪些是经常发生的？（多选）";
+_mul[14]=0; _q[14]="是否经常因为玩手机而拖延去做其他的事情（比如去吃饭、去自习等）？";
+_mul[15]=0; _q[15]="您一般能坚持多长时间专注做一件事（比如阅读，做题等）？";
+_mul[16]=0; _q[16]="您在上数学课时容易走神吗？";
+_mul[17]=1; _q[17]="下述这些情况有哪些是您经常发生的？（多选）";
+_mul[18]=0; _q[18]="平时开始上课时您能在多久之内集中注意力？";
+_mul[19]=0; _q[19]="您最近一次丢失上课用具或生活用品的时间是？";
+_mul[20]=0; _q[20]="您在做作业或考试时经常犯粗心的错误吗？";
+_mul[21]=1; _q[21]="下述这些情况有哪些是您经常发生的？（多选）";
+_mul[22]=0; _q[22]="当遇到需要花费心思的活动或工作时，您会";
+_mul[23]=1; _q[23]="下面哪些情况符合您？（多选）";
+_mul[24]=0; _q[24]="最后来做个小游戏吧！(๑•̀ω•́๑)依次点击01~25的数字，看看最少需要多少秒！";
+
+
+_a_addi[0]=0;
+_a_addi[1]=0; //次数
+
+_w = document.getElementById("hiddendiv").offsetWidth;
+_h=document.getElementById("hiddendiv").offsetHeight;
+var child=document.getElementById("hiddendiv");
+child.parentNode.removeChild(child);
+if (!!window.ActiveXObject || "ActiveXObject" in window){
+	_ie=true;
+}
+
+
+</script>
+
+<div id="background">
+<img id="backgroundp" src="/Content/Wenjuan/background2.png" alt="picture" />
+<div id="covertext">
+<p id="header" class="headersfont">您的浏览器无法正常运行javascript脚本，<br />页面无法正常显示(。•́︿•̀ 。)<br />请更新您的浏览器至最新版本。</p>
+<script>$("#header").text("手机的使用对大学生注意力的影响"); </script>
+<div id="buttondiv" style="position: absolute; width: 100%; overflow: hidden;">
+<table id="button" onmouseover="mu();" onmouseout="mo();" onclick="cl();" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>进入问卷</td>
+  </tr>
+</table>
+
+<!--<div id="button" onmouseover="mu();" onmouseout="mo();" onclick="cl();">
+进入问卷
+</div>-->
+</div>
+<p id="bottomline" align="right" style="padding-right: 5%; position: absolute; bottom: 5%; right: 0px;">华中科技大学社会实践小组</p>
+<!--div id="hiddendiv" style="border: 1px solid #FF0000;position:absolute;height:10px;bottom: 15%;width:52.5em;visibility:hidden;"/-->
+</div>
+</div>
+
+
+
+<script>
+window.addEventListener("resize", function(){divresize1();});
+divresize1();
+
+alert("(๑•̀ω•́๑)\n感谢您能腾出宝贵的时间参加本次问卷！");
+
+function divresize1()
+{
+	if(document.documentElement.clientWidth<=_w
+	){
+		document.getElementById("header").style.fontSize="2.5em";
+		document.getElementById("button").style.fontSize="2em";
+		document.getElementById("button").style.width="7em";
+
+	}
+	else{
+		document.getElementById("header").style.fontSize="3.5em";
+		document.getElementById("button").style.fontSize="2.5em";
+		document.getElementById("button").style.width="8em";
+
+	}
+	if(document.documentElement.clientWidth/document.documentElement.clientHeight<1600/1059){
+		var w=document.documentElement.clientHeight/1059*1600;
+		document.getElementById("backgroundp").style.width="auto"
+		document.getElementById("backgroundp").style.height="100%";
+		document.getElementById("backgroundp").style.marginTop=0;
+		document.getElementById("backgroundp").style.marginLeft=
+			-(w-document.documentElement.clientWidth)/2+"px";
+	}
+	else {
+		var h=document.documentElement.clientWidth/1600*1059;
+		document.getElementById("backgroundp").style.width="100%";
+		document.getElementById("backgroundp").style.height="auto";
+		document.getElementById("backgroundp").style.marginLeft=0;
+		document.getElementById("backgroundp").style.marginTop=
+			-(h-document.documentElement.clientHeight)/2+"px";
+	}
+	document.getElementById("buttondiv").style.top=
+		document.getElementById("header").offsetHeight+
+		document.getElementById("header").offsetTop+
+		"px";
+	document.getElementById("buttondiv").style.height=
+		document.getElementById("bottomline").offsetTop-
+		document.getElementById("header").offsetHeight-
+		document.getElementById("header").offsetTop+
+		"px";
+	document.getElementById("button").style.top=
+		document.getElementById("buttondiv").offsetHeight/2-
+		document.getElementById("button").offsetHeight/2+
+		"px";
+	document.getElementById("button").style.left=
+		document.getElementById("buttondiv").offsetWidth/2-
+		document.getElementById("button").offsetWidth/2+
+		"px";
+	
+	//document.getElementById("buttondiv").style.marginBottom="8%";
+    /*document.getElementById("background").style.backgroundSize = document.documentElement.clientHeight.toString() + "px " + document.documentElement.clientWidth.toString()+"px";*/
+}
+
+function divresize2()
+{
+	var w=document.documentElement.clientWidth;
+	var h=document.documentElement.clientHeight;
+	
+	if(w/h<1600/1059){
+		var w2=h/1059*1600;
+		document.getElementById("backgroundp").style.width="auto"
+		document.getElementById("backgroundp").style.height="100%";
+		document.getElementById("backgroundp").style.top=0;
+		document.getElementById("backgroundp").style.left= -(w2-w)/2+"px";
+	}
+	else {
+		var h2=w/1600*1059;
+		document.getElementById("backgroundp").style.width="100%";
+		document.getElementById("backgroundp").style.height="auto";
+		document.getElementById("backgroundp").style.left=0;
+		document.getElementById("backgroundp").style.top= -(h2-h)/2+"px";
+	}
+	
+	if(w<=_w){
+		document.getElementById("maindiv").style.marginLeft="0px";
+		document.getElementById("maindiv").style.width="100%";
+	}
+	else {
+		document.getElementById("maindiv").style.width=_w+"px";
+		document.getElementById("maindiv").style.marginLeft=w/2-_w/2+"px";
+	}
+	if(document.getElementById("buttondiv2") && document.getElementById("questiondiv")) {
+		document.getElementById("buttondiv2").style.marginTop=
+		document.getElementById("questiondiv").style.height=
+			h-document.getElementById("buttondiv2").offsetHeight+"px";
+	}
+	if(document.getElementById("epilogue_t")){
+		document.getElementById("epilogue_t").style.height=
+			document.getElementById("epilogue").offsetHeight+"px";
+		if(w<=_w){
+			document.getElementById("epilogue_t_title").style.fontSize="2.5em";
+		}
+		else {
+			document.getElementById("epilogue_t_title").style.fontSize="3.5em";
+		}
+	}
+		
+	if(_ie){
+		for(var j=1;j<=_max_o;j++) {
+			if(document.getElementById("o"+_i+"_b"+j)) document.getElementById("o"+_i+"_b"+j).style.height=document.getElementById("o"+_i+"_"+j).clientHeight+"px";
+		}
+	}
+}
+
+function md()
+{
+	/*
+	mouse=true;
+	document.getElementById("button").style.backgroundColor="rgba(255, 255, 255, 1)";
+	document.getElementById("button").style.color="rgba(35,52,74,1)";
+	*/
+}
+function mu()
+{
+	document.getElementById("button").style.backgroundColor="rgba(255, 255, 255, 0.3)";
+	document.getElementById("button").style.color="#FFFFFF";
+}
+function mo()
+{
+	document.getElementById("button").style.backgroundColor="rgba(0,0,0,0)";
+	document.getElementById("button").style.color="#FFFFFF";
+}
+function cl()
+{
+		document.getElementById("button").style.backgroundColor="#FFFFFF";
+		document.getElementById("button").style.color="rgb(35,52,74)";
+		setTimeout(function(){
+			mo();
+			document.getElementById("covertext").style.marginLeft=
+				-document.documentElement.clientWidth+
+				"px";
+			setTimeout(function(){
+				var child=document.getElementById("covertext");
+				child.parentNode.removeChild(child);
+				loadquestions();
+			},650);
+		},200);
+
+
+}
+
+function mu2()
+{
+	document.getElementById("button2").style.backgroundColor="rgba(255, 255, 255, 0.3)";
+	document.getElementById("button2").style.color="#FFFFFF";
+}
+function mo2()
+{
+	document.getElementById("button2").style.backgroundColor="rgba(0,0,0,0)";
+	document.getElementById("button2").style.color="#FFFFFF";
+}
+function cl2()
+{
+	document.getElementById("button2").style.backgroundColor="#FFFFFF";
+	document.getElementById("button2").style.color="rgb(35,52,74)";
+	setTimeout(function(){
+		mo2();
+		prevquestion();
+	},200);
+
+
+}
+
+function mu3()
+{
+
+}
+function mo3()
+{
+	//document.getElementById("button2").style.borderRightColor=
+	document.getElementById("button3").style.backgroundColor=
+	document.getElementById("button3").style.borderColor="#FFFFFF";
+	document.getElementById("button3").style.color="rgb(35,52,74)";
+}
+function cl3()
+{
+	/*document.getElementById("button2").style.borderRightColor=
+	document.getElementById("button3").style.backgroundColor=
+	document.getElementById("button3").style.borderColor="rgb(0,255,64)";*/
+	document.getElementById("button3").style.color="#FFFFFF";
+	setTimeout(function(){
+		mo3();
+		nextquestion();
+	},200);
+
+
+}
+
+function mu_o(i)
+{
+	if((_a[_i]&(1<<i))!=0) return;
+	document.getElementById("o"+_i+"_b"+i).style.backgroundColor="rgba(255, 255, 255, 0.4)";
+	document.getElementById("o"+_i+"_t"+i).style.color="#FFFFFF";
+}
+function mo_o(i)
+{
+	if((_a[_i]&(1<<i))!=0) return;
+	document.getElementById("o"+_i+"_b"+i).style.backgroundColor="rgba(255, 255, 255, 0.2)";
+	document.getElementById("o"+_i+"_t"+i).style.color="#FFFFFF";
+}
+
+function cl_o(i)
+{
+	document.getElementById("o"+_i+"_b"+i).style.backgroundColor="#FFFFFF";
+	document.getElementById("o"+_i+"_t"+i).style.color="rgb(35,52,74)";	
+	if(_mul[_i]==0){
+		_a[_i]=1<<i;
+		setTimeout(function(){
+			nextquestion();
+		},200);
+	}
+	else {
+		if((_a[_i]&(1<<i))==0){
+			_a[_i]|=1<<i;
+		}
+		else {
+			_a[_i]&=~(1<<i);
+			mo_o(i);
+		}
+	}
+	for(var j=1;j<=_max_o;j++) {
+		if(document.getElementById("o"+_i+"_t"+i)){
+			mo_o(j);
+		}
+	}
+
+
+}
+
+
+function loadquestions()
+{
+	if(__debug) alert("load");
+	window.removeEventListener("resize", function(){divresize1();});
+	$("#background").load("/Content/Wenjuan/questions.html #maindiv", function () {
+	    $("#background").prepend("<img id=\"backgroundp\" src=\"/Content/Wenjuan/background2.png\" alt=\"picture\"/ style=\"position:absolute;\">")
+		divresize2();
+		document.getElementById("maindiv").style.top="0px";
+		document.getElementById("maindiv").style.opacity=1;
+		setTimeout(function(){
+			_i=0;
+			retrievedata();
+			window.addEventListener("resize", function () { divresize2(); });
+			if(_new)
+				showquestion(1);  //1
+			else
+				showquestion(_i);  //_i
+		},650);
+	});
+
+
+}
+
+function showquestion(i) {
+    _state = 1;
+    removecurrentquestion(function () {
+        _i = i;
+		storedata();
+        if(__debug) alert("s_p" + _i);
+        switch (_i) {
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+			case 14:
+			case 15:
+			case 16:
+			case 17:
+			case 18:
+			case 19:
+			case 20:
+			case 21:
+			case 22:
+			case 23:
+
+                if(__debug) alert("s");
+
+                document.getElementById("questiontd").innerHTML = _q[_i];
+                document.getElementById("number").innerHTML = _i;
+                document.getElementById("optionstitle").innerHTML = "&nbsp;";
+                $("#options").load("/Content/Wenjuan/questions.html #o" + _i, function () {
+                    for (var j = 1; j <= _max_o; j++) {
+                        if ((_a[_i] & (1 << j)) != 0) {
+                            document.getElementById("o" + _i + "_b" + j).style.backgroundColor = "#FFFFFF";
+                            document.getElementById("o" + _i + "_t" + j).style.color = "rgb(35,52,74)";
+                        }
+                        if (document.getElementById("o" + _i + "_t" + j)) {
+                            document.getElementById("o" + _i + "_t" + j).style.opacity = 0;
+                        }
+                    }
+                    document.getElementById("optionstitle").style.opacity =
+					document.getElementById("numbertd").style.opacity =
+					document.getElementById("questiontd").style.opacity = 1;
+                    document.getElementById("optionstitle").style.top =
+					document.getElementById("numbertd").style.top =
+					document.getElementById("questiontd").style.top = "0px";
+                    for (var j = 1; j <= _max_o; j++) {
+                        if (document.getElementById("o" + _i + "_" + j)) {
+                            //document.getElementById("o"+i+"_"+j).style.display="block";
+                            document.getElementById("o" + _i + "_" + j).offsetHeight;
+                            document.getElementById("o" + _i + "_" + j).style.transform = "rotateX(0deg)";
+                            if (_ie) document.getElementById("o" + _i + "_b" + j).style.height = document.getElementById("o" + _i + "_" + j).clientHeight + "px";
+                        }
+                    }
+                    setTimeout(function () {
+                        for (var j = 1; j <= _max_o; j++) {
+                            if (document.getElementById("o" + _i + "_t" + j)) {
+                                document.getElementById("o" + _i + "_t" + j).style.opacity = 1;
+                            }
+                        }
+                        _state = 0;
+                    }, 550);
+                });
+                break;
+
+            case 24:
+                document.getElementById("questiontd").innerHTML = _q[_i];
+                document.getElementById("number").innerHTML = _i;
+                document.getElementById("optionstitle").innerHTML = "最短： " + _a[_i] / 1000 + " 秒";
+                $("#options").load("/Content/Wenjuan/questions.html #o" + _i, function () {
+                    document.getElementById("optionstitle").style.opacity =
+					document.getElementById("numbertd").style.opacity =
+					document.getElementById("questiontd").style.opacity = 1;
+                    document.getElementById("optionstitle").style.top =
+					document.getElementById("numbertd").style.top =
+					document.getElementById("questiontd").style.top = "0px";
+                    o24_showrand(0);
+                    document.getElementById("o24").offsetHeight;
+                    document.getElementById("o24").style.opacity = 1;
+                    document.getElementById("o24").style.top = "0px";
+                    setTimeout(function () { _state = 0; });
+                });
+
+        }
+    });
+
+}
+
+function removecurrentquestion(callback)
+{
+	if(!_rm) {
+		_rm=true;
+		callback();
+		return;
+	}
+	if(__debug) alert("rm_p"+_i);
+	switch(_i){
+		//case 0:
+		//	setTimeout(function(){
+		//		callback();
+		//	},0);
+		//	break;
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+		case 13:
+		case 14:
+		case 15:
+		case 16:
+		case 17:
+		case 18:
+		case 19:
+		case 20:
+		case 21:
+		case 22:
+		case 23:
+			if(__debug) alert("rm");
+			for(var j=1;j<=_max_o;j++) {
+				if(document.getElementById("o"+_i+"_t"+j)){
+					document.getElementById("o"+_i+"_t"+j).style.opacity=0;
+				}
+			}
+			document.getElementById("optionstitle").style.opacity=
+			document.getElementById("numbertd").style.opacity=
+			document.getElementById("questiontd").style.opacity=0;
+			document.getElementById("optionstitle").style.top=
+			document.getElementById("numbertd").style.top=
+			document.getElementById("questiontd").style.top="-1em";
+			for(var j=1;j<=_max_o;j++) {
+				if(document.getElementById("o"+_i+"_"+j)){
+					//document.getElementById("o"+i+"_"+j).style.display="block";
+					//document.getElementById("o"+i+"_"+j).offsetHeight;
+					document.getElementById("o"+_i+"_"+j).style.transform="rotateX(90deg)";
+				}
+			}
+			setTimeout(function(){
+				callback();
+			},550);
+			break;
+		case 24:
+			document.getElementById("optionstitle").style.opacity=
+			document.getElementById("numbertd").style.opacity=
+			document.getElementById("questiontd").style.opacity=0;
+			document.getElementById("optionstitle").style.top=
+			document.getElementById("numbertd").style.top=
+			document.getElementById("questiontd").style.top="-1em";
+			document.getElementById("o24").style.opacity=0;
+
+			document.getElementById("o24").style.top="-1em";
+			setTimeout(function(){
+				callback();
+			},550);
+			break;
+
+	    default:
+	        setTimeout(function(){
+	            callback();
+	        },0);
+	        break;
+	}
+}
+
+function prevquestion()
+{
+	if(_state==1) return;
+	if(_i==1) return;
+	$("#button3").text("下一题");
+	showquestion(_i-1);
+}
+
+function nextquestion()
+{
+	if(_state==1) return;
+	if((_i==_n-1) || (_i==_n)) $("#button3").text("提交");
+	else $("#button3").text("下一题");
+	if(__debug) alert("next");
+	if(_i==_n) {
+	    submitanswers(function () {
+	        document.getElementById("maindiv").style.top = "-1em";
+	        document.getElementById("maindiv").style.opacity = 0;
+	        cleardata();
+	        setTimeout(function () {
+	            $("#maindiv").load("/Content/Wenjuan/questions.html #epilogue", function () {
+	                document.getElementById("epilogue").offsetHeight;
+	                divresize2();
+	                document.getElementById("maindiv").style.top = "0px";
+	                document.getElementById("maindiv").style.opacity = 1;
+	            });
+	        }, 650);
+	    });
+
+		return;
+	}
+	showquestion(_i+1);
+}
+
+function submitanswers(callback)
+{
+	var j=0;
+	var nullanswers=new Array();
+	for(var i=1;i<=_n;i++) {
+		if((_a[i]==0) && (_mul[i]==0)) {
+			nullanswers[j]=i;
+			j++;
+		}
+	}
+	if(j>0){ //j>0
+		alert("您第" + nullanswers.toString() + "题还没有做呢！");
+		//return true;   //debug
+		showquestion(nullanswers[0]);
+		return false;
+	}
+	else {
+		//alert("post");
+
+	    $.post("/Wenjuan/Submit", { token: _token, a: _a.toString(), a_addi: _a_addi.toString() }, function (data) {
+	        //alert("p");
+	        if (data == "0")
+	            callback();
+		});
+
+		
+		
+	}
+
+}
+
+
+
+
+
+function storedata()
+{
+	setCookie("wenjuan_a",_a.toString(),1);
+	setCookie("wenjuan_c",_i,1);
+	setCookie("wenjuan_a_addi", _a_addi.toString(), 1);
+	setCookie("wenjuan_token", _token, 1);
+}
+
+function retrievedata()
+{
+	var s=getCookie("wenjuan_a");
+	if(s=="") {
+		_new=true
+		return;
+	}
+	else _a=s.split(",");
+	if(__debug) alert(_a.toString());
+	s=getCookie("wenjuan_c");
+	if(s=="") {
+		_new=true
+		return;
+	}
+	else _i=parseInt(s);
+	if(__debug) alert(_i);
+	s=getCookie("wenjuan_a_addi");
+	if(s=="") {
+		_new=true
+		return;
+	}
+	else _a_addi = s.split(",");
+	s = getCookie("wenjuan_token");
+	if (s == "") {
+	    _new = true
+	    return;
+	}
+	else _token = s;
+	if(__debug) alert(_a_addi.toString());
+	
+}
+
+function cleardata()
+{
+	setCookie("wenjuan_a","",1);
+	setCookie("wenjuan_c","",1);
+	setCookie("wenjuan_a_addi", "", 1);
+	setCookie("wenjuan_token", "", 1);
+
+}
+
+
+
+function getCookie(c_name){
+　　　　if (document.cookie.length>0){　　
+　　　　　　c_start=document.cookie.indexOf(c_name + "=");
+　　　　　　if (c_start!=-1){ 
+　　　　　　　　c_start=c_start + c_name.length+1;
+　　　　　　　　c_end=document.cookie.indexOf(";",c_start);　　
+　　　　　　　　if (c_end==-1) c_end=document.cookie.length;　　
+　　　　　　　　return unescape(document.cookie.substring(c_start,c_end));　　
+　　　　　　} 
+　　　　}
+　　　　return "";
+}　
+
+function setCookie(c_name, value, expiredays){
+ 　　　　var exdate=new Date();
+ 　　　　exdate.setDate(exdate.getDate() + expiredays);
+ 　　　　document.cookie=c_name+ "=" + escape(value) + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+}
+
+</script>
+
+
+
+<!--------------------------------------------------------------------------------------------------------->
+
+<script>
+
+var _o24_r = new Array(25+1);
+var _o24_current;
+var _o24_d;
+var _o24_enabled=false;
+
+function o24_rand(i)
+{
+	var r;
+	while (!(r = Math.random()));
+	return Math.ceil(Math.random() * i);
+}
+
+function o24_genrand(j)
+{
+	if(j==0) {
+		var randtmp = new Array(25+1);
+		for (var i = 0; i <= 25; i++)
+			_o24_r[i]=randtmp[i] = i;
+		
+		for (var i = 25; i >= 1; i--) {
+			var r = o24_rand(i);
+			_o24_r[i] = randtmp[r];
+			randtmp.splice(r, 1);
+		}
+		
+	}
+	else {
+		var randtmp = new Array(25+1);
+		for (var i = 0; i <= 25; i++)
+			_o24_r[i]=randtmp[i] = i;
+		_o24_r[j]=1;
+		randtmp.splice(1, 1);
+		for (var i = 25; i > j; i--) {
+			var r = o24_rand(i-1);
+			_o24_r[i] = randtmp[r];
+			randtmp.splice(r, 1);
+		}
+		for (var i = j-1; i >= 1; i--) {
+			var r = o24_rand(i);
+			_o24_r[i] = randtmp[r];
+			randtmp.splice(r, 1);
+		}
+	}
+	_o24_current=1;
+}
+
+function o24_showrand(i)
+{
+	if(i==0) {
+		o24_genrand(i);
+		for(var i=1;i<=25;i++){
+			if(_o24_r[i]<10)
+				document.getElementById("o24_custom_"+i).innerHTML="0"+_o24_r[i];
+			else
+				document.getElementById("o24_custom_"+i).innerHTML=+_o24_r[i];
+			document.getElementById("o24_custom_"+i).style.color="rgba(255,255,255,0.2)";
+		}
+		_o24_enabled=false;
+	}
+	else {
+		o24_genrand(i);
+		for(var i=1;i<=25;i++){
+			if(_o24_r[i]<10)
+				document.getElementById("o24_custom_"+i).innerHTML="0"+_o24_r[i];
+			else
+				document.getElementById("o24_custom_"+i).innerHTML=+_o24_r[i];
+			document.getElementById("o24_custom_"+i).style.color="#FFFFFF";
+		}
+		_o24_enabled=true;
+	}
+
+}
+
+function o24_mu(i)
+{
+	document.getElementById("o24_custom_"+i).style.backgroundColor="rgba(255, 255, 255, 0.3)";
+	if(i==100) {
+		document.getElementById("o24_custom_"+i).style.color="#FFFFFF";
+		return;
+	}
+	if(_o24_enabled) document.getElementById("o24_custom_"+i).style.color="#FFFFFF";
+	else document.getElementById("o24_custom_"+i).style.color="rgba(255,255,255,0.2)";
+}
+
+function o24_mo(i)
+{
+	document.getElementById("o24_custom_"+i).style.backgroundColor="rgba(0,0,0,0)";
+	if(i==100) {
+		document.getElementById("o24_custom_"+i).style.color="#FFFFFF";
+		return;
+	}
+	if(_o24_enabled) document.getElementById("o24_custom_"+i).style.color="#FFFFFF";
+	else document.getElementById("o24_custom_"+i).style.color="rgba(255,255,255,0.2)";
+}
+
+function o24_cl(i)
+{
+	if(i==100) {
+		document.getElementById("o24_custom_"+i).style.backgroundColor="#FFFFFF";
+		document.getElementById("o24_custom_"+i).style.color="rgb(35,52,74)";
+		setTimeout(function(){
+			o24_mo(i);
+		},200);
+		o24_showrand(0);
+		return;
+	}
+	if(_o24_r[i]!=_o24_current) return;
+	if(_o24_current==1) {
+		_o24_d=new Date();
+		o24_showrand(i)
+	}
+	document.getElementById("o24_custom_"+i).style.backgroundColor="#00FF00";
+	document.getElementById("o24_custom_"+i).style.color="#FFFFFFFF";
+	setTimeout(function(){
+		o24_mo(i);
+	},100);
+	if(_o24_current==25) {
+		var d=new Date();
+		var delta=d.getTime()-_o24_d.getTime();
+		alert("本次： " +delta/1000+" 秒");
+		_a_addi[1]++;
+		if(_a[_i]==0 || _a[_i]>delta) _a[_i]=delta;
+		storedata();
+		document.getElementById("optionstitle").innerHTML="最短： "+_a[_i]/1000+" 秒";
+	}
+	_o24_current++;
+}
+
+
+</script>
+
+
+</body>
+
+</html>

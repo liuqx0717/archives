@@ -1,0 +1,1084 @@
+A51 MACRO ASSEMBLER  DIGITS                                                               11/15/2017 18:41:38 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.5.0
+OBJECT MODULE PLACED IN .\Objects\Digits.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE asm\Digits.asm NOMOD51 SET(SMALL) DEBUG PRINT(.\Listings\Digits.lst) OB
+                      JECT(.\Objects\Digits.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;$include (GlobalVars.inc)
+
+                +1     2     ; 08H~1FH:  local variables(arguments) & global variables
+
+                +1     3     ; 20H~27H:  bits (00H~3FH)
+
+                +1     4     ; 30H~7FH:  stack & global variables
+
+                +1     5     
+
+                +1     6     ; A,B,C:      volatile
+
+                +1     7     
+
+                +1     8     
+
+  0018          +1     9     Timer_CNT1                      EQU             18H
+
+  001F          +1    10     Timer_CNT8                      EQU             1FH
+
+                +1    11             
+
+                +1    12     
+
+  0017          +1    13     Timer_CTRL                      EQU             17H      ;H |1|2|3|4|5|6|7|8| L
+
+                +1    14             
+
+  0016          +1    15     LEDs_Pattern            EQU             16H
+
+                +1    16             
+
+  0015          +1    17     Keys_LastCode           EQU             15H
+
+                +1    18             
+
+  0014          +1    19     Beep_Count                      EQU             14H
+
+  0013          +1    20     Beep_Total                      EQU             13H
+
+  0012          +1    21     Beep_State                      EQU             12H
+
+                +1    22             
+
+  0011          +1    23     g_Digit1                        EQU             11H       ;Digit1~2
+
+  0010          +1    24     g_Digit2                        EQU             10H       ;Digit3~4
+
+                +1    25     
+
+  007F          +1    26     TEST3_MainState         EQU             7FH
+
+                +1    27     
+
+  007E          +1    28     PASSWORD_State          EQU             7EH
+
+  007D          +1    29     PASSWORD_PSW1           EQU             7DH
+
+  007C          +1    30     PASSWORD_PSW2           EQU             7CH
+
+  007B          +1    31     HOMEWORK_Count          EQU             7BH
+
+  007A          +1    32     HOMEWORK_Second1        EQU             7AH
+
+  0079          +1    33     HOMEWORK_Second2        EQU             79H
+
+  0078          +1    34     HOMEWORK_Second3        EQU             78H
+
+  0077          +1    35     HOMEWORK_Second         EQU             77H
+
+  0076          +1    36     CALCULATE_NUM           EQU             76H
+
+  0075          +1    37     CALCULATE_1                     EQU             75H
+
+  0074          +1    38     CALCULATE_2                     EQU             74H
+
+                +1    39     
+
+                +1    40     
+
+                +1    41     
+
+  0020          +1    42     g_LEDs                          EQU             20H
+
+  0000          +1    43     g_LED1                          BIT             00H
+
+  0001          +1    44     g_LED2                          BIT             01H
+
+  0002          +1    45     g_LED3                          BIT             02H
+
+  0003          +1    46     g_LED4                          BIT             03H
+
+  0004          +1    47     g_LED5                          BIT             04H
+
+  0005          +1    48     g_LED6                          BIT             05H
+
+  0006          +1    49     g_LED7                          BIT             06H
+
+  0007          +1    50     g_LED8                          BIT             07H
+
+                +1    51             
+
+  0008          +1    52     INT_C_old                       BIT             08H
+
+                +1    53             
+
+  0009          +1    54     INIT_KeLED                      BIT             09H
+
+  0010          +1    55     INIT_KeBeep                     BIT             10H
+
+  0011          +1    56     INIT_KeKeys                     BIT             11H
+
+  0012          +1    57     INIT_LED                        BIT             12H
+
+A51 MACRO ASSEMBLER  DIGITS                                                               11/15/2017 18:41:38 PAGE     2
+
+  0013          +1    58     INIT_Beep                       BIT             13H
+
+  0014          +1    59     INIT_Timer                      BIT             14H
+
+  0015          +1    60     INIT_KeTimer2           BIT             15H
+
+  0016          +1    61     INIT_KeLEDs                     BIT             16H
+
+  0017          +1    62     INIT_LEDs                       BIT             17H
+
+  0018          +1    63     INIT_Keys                       BIT             18H
+
+  0019          +1    64     INIT_KeDigits           BIT             19H
+
+  001A          +1    65     INIT_Digits                     BIT             1AH
+
+                +1    66     ;INIT_
+
+                +1    67     ;INIT_
+
+                +1    68     ;INIT_
+
+                +1    69     ;INIT_
+
+                +1    70     
+
+  0024          +1    71     Digits_State            EQU             24H    
+
+  0020          +1    72     Digits_State7           BIT             20H
+
+  0027          +1    73     Digits_State0           BIT             27H
+
+                +1    74             
+
+  0025          +1    75     g_DigitState            EQU             25H       ;H |S41|S40|S31|S30|S21|S20|S11|S10|
+
+  0028          +1    76     g_DigitState7           BIT             28H           ;Sn1 Sn0:
+
+  002F          +1    77     g_DigitState0           BIT             2FH               ;    00normal  01dp  10 light  11
+                              close
+
+                +1    78             
+
+  0026          +1    79     Digits_LastState        EQU             26H
+
+  0030          +1    80     Digits_LastState0       BIT             30H
+
+  0037          +1    81     Digits_LastState7       BIT             37H
+
+                +1    82             
+
+  0027          +1    83     HOMEWORK_State          EQU             27H
+
+  0038          +1    84     HOMEWORK_State7         BIT             38H
+
+  003F          +1    85     HOMEWORK_State0         BIT             3FH
+
+  0040          +1    86     CAL_STATE1                      BIT             40H
+
+  0041          +1    87     CAL_STATE2                      BIT             41H
+
+  0042          +1    88     CAL_STATE3                      BIT             42H
+
+                +1    89     
+
+                      90     
+
+                      91     
+
+                      92     ;$include (KeDigits.inc)
+
+                +1    93     EXTRN   CODE    (KeDigits_Init)
+
+                +1    94             
+
+                +1    95             
+
+                +1    96     ;08H.7 08H.6  00normal  01dp  10 light  11 close
+
+                +1    97     ;08h.5 08H.4  00  First  01 second 10 third 11 fourth
+
+                +1    98     ;08L   00~09: num0~9   10: -
+
+                +1    99     EXTRN   CODE    (KeDigits_Output)
+
+                     100     
+
+                     101             
+
+                     102     ;$include (Timer.inc)
+
+                +1   103     ;Timer_0 will start immediately
+
+                +1   104     ;Timer_n(1~8) will start only after you call the Timer_Start function
+
+                +1   105     ;Timer_0 cannot be stopped by Timer_Stop function
+
+                +1   106     EXTRN   CODE    (Timer_Init)
+
+                +1   107             
+
+                +1   108             
+
+                +1   109             
+
+                +1   110     ;arguments:
+
+                +1   111     ;    08H  n
+
+                +1   112     ;return:
+
+                +1   113     ;    returns 0 if Timer_n is not running
+
+                +1   114     EXTRN   CODE    (Timer_CheckCTRL)
+
+                +1   115             
+
+                +1   116             
+
+                +1   117             
+
+                +1   118     ;arguments:
+
+                +1   119     ;    08H  n
+
+                +1   120     EXTRN   CODE    (Timer_Start)
+
+                +1   121             
+
+                +1   122             
+
+A51 MACRO ASSEMBLER  DIGITS                                                               11/15/2017 18:41:38 PAGE     3
+
+                +1   123             
+
+                +1   124     ;arguments:
+
+                +1   125     ;    08H  n
+
+                +1   126     EXTRN   CODE    (Timer_Stop)
+
+                     127     
+
+                     128             
+
+                     129     
+
+                     130     
+
+                     131     PUBLIC  Digits_Init
+
+                     132     PUBLIC  Digits_Sweep
+
+                     133     PUBLIC  Digits_StartBlink4
+
+                     134     PUBLIC  Digits_StartBlink3
+
+                     135     PUBLIC  Digits_StartBlink2
+
+                     136     PUBLIC  Digits_StartBlink1
+
+                     137     PUBLIC  Digits_StopBlink4
+
+                     138     PUBLIC  Digits_StopBlink3
+
+                     139     PUBLIC  Digits_StopBlink2
+
+                     140     PUBLIC  Digits_StopBlink1
+
+                     141             
+
+                     142     PUBLIC  Timer_3
+
+                     143     
+
+                     144     
+
+                     145     ;Digits_State:
+
+                     146     ;    5~4: which digit to light (for sweeping) 
+
+                     147     ;    3~0: indicats whether the corresponding digit is blinking (0:no 1:yes)
+
+                     148     
+
+                     149     ;g_DigitState:  
+
+                     150     ;    H |S41|S40|S31|S30|S21|S20|S11|S10|
+
+                     151     ;    Sn1 Sn0:
+
+                     152     ;        00normal  01dp  10 light  11 close
+
+                     153     
+
+                     154     ;g_Digit1:    Digit1~2
+
+                     155     ;g_Digit2:    Digit3~4
+
+                     156     
+
+                     157     
+
+                     158     ;Digits_LastState:
+
+                     159     ;    Last state (for blinking)
+
+                     160     
+
+                     161     
+
+                     162     DIGITS  SEGMENT         CODE
+
+----                 163                     RSEG            DIGITS
+
+                     164             
+
+                     165             
+
+0000                 166     Digits_Init:
+
+0000 C008            167                     PUSH    08H
+
+0002 201A17          168                     JB              INIT_Digits,FinishInit
+
+0005 D21A            169                     SETB    INIT_Digits
+
+                     170                     
+
+0007 120000   F      171                     LCALL   KeDigits_Init
+
+000A 120000   F      172                     LCALL   Timer_Init
+
+                     173                     
+
+000D 7525FF          174                     MOV             g_DigitState,#0FFH
+
+0010 752400          175                     MOV             Digits_State,#00H
+
+0013 7526FF          176                     MOV             Digits_LastState,#0FFH
+
+                     177                     
+
+0016 750803          178                     MOV             08H,#3
+
+0019 120000   F      179                     LCALL   Timer_Start
+
+                     180                     
+
+001C                 181     FinishInit:
+
+001C D008            182                     POP             08H
+
+001E 22              183                     RET
+
+                     184                     
+
+                     185                     
+
+001F                 186     Digits_Sweep:
+
+001F C008            187                     PUSH    08H
+
+                     188                     
+
+A51 MACRO ASSEMBLER  DIGITS                                                               11/15/2017 18:41:38 PAGE     4
+
+0021 E524            189                     MOV             A,Digits_State
+
+0023 5430            190                     ANL             A,#00110000B
+
+0025 F508            191                     MOV             08H,A
+
+                     192                     
+
+0027                 193     DIGIT0:
+
+0027 B4001C          194                     CJNE    A,#00000000B,DIGIT1
+
+002A C225            195                     CLR             Digits_State.5
+
+002C D224            196                     SETB    Digits_State.4
+
+002E E511            197                     MOV             A,g_Digit1
+
+0030 540F            198                     ANL             A,#00001111B
+
+0032 4208            199                     ORL             08H,A                                           ;write g_Di
+                             git1 lower 4 bits to 08H
+
+0034 E508            200                     MOV             A,08H
+
+0036 A229            201                     MOV             C,g_DigitState.1
+
+0038 92E7            202                     MOV             ACC.7,C
+
+003A A228            203                     MOV             C,g_DigitState.0
+
+003C 92E6            204                     MOV             ACC.6,C
+
+003E F508            205                     MOV             08H,A
+
+0040 120000   F      206                     LCALL   KeDigits_Output
+
+0043 020000   F      207                     LJMP    FINISH
+
+                     208                     
+
+0046                 209     DIGIT1:
+
+0046 B4101D          210                     CJNE    A,#00010000B,DIGIT2
+
+0049 D225            211                     SETB    Digits_State.5
+
+004B C224            212                     CLR             Digits_State.4
+
+004D E511            213                     MOV             A,g_Digit1
+
+004F 54F0            214                     ANL             A,#11110000B
+
+0051 C4              215                     SWAP    A
+
+0052 4208            216                     ORL             08H,A                                           ;write g_Di
+                             git1 higher 4 bits to 08H
+
+0054 E508            217                     MOV             A,08H
+
+0056 A22B            218                     MOV             C,g_DigitState.3
+
+0058 92E7            219                     MOV             ACC.7,C
+
+005A A22A            220                     MOV             C,g_DigitState.2
+
+005C 92E6            221                     MOV             ACC.6,C
+
+005E F508            222                     MOV             08H,A
+
+0060 120000   F      223                     LCALL   KeDigits_Output
+
+0063 020000   F      224                     LJMP    FINISH
+
+                     225                     
+
+0066                 226     DIGIT2:
+
+0066 B4201C          227                     CJNE    A,#00100000B,DIGIT3
+
+0069 D225            228                     SETB    Digits_State.5
+
+006B D224            229                     SETB    Digits_State.4
+
+006D E510            230                     MOV             A,g_Digit2
+
+006F 540F            231                     ANL             A,#00001111B
+
+0071 4208            232                     ORL             08H,A                                           ;write g_Di
+                             git2 lower 4 bits to 08H
+
+0073 E508            233                     MOV             A,08H
+
+0075 A22D            234                     MOV             C,g_DigitState.5
+
+0077 92E7            235                     MOV             ACC.7,C
+
+0079 A22C            236                     MOV             C,g_DigitState.4
+
+007B 92E6            237                     MOV             ACC.6,C
+
+007D F508            238                     MOV             08H,A
+
+007F 120000   F      239                     LCALL   KeDigits_Output
+
+0082 020000   F      240                     LJMP    FINISH
+
+                     241             
+
+0085                 242     DIGIT3:
+
+0085 B4301D          243                     CJNE    A,#00110000B,FINISH
+
+0088 C225            244                     CLR             Digits_State.5
+
+008A C224            245                     CLR             Digits_State.4
+
+008C E510            246                     MOV             A,g_Digit2
+
+008E 54F0            247                     ANL             A,#11110000B
+
+0090 C4              248                     SWAP    A
+
+0091 4208            249                     ORL             08H,A                                           ;write g_Di
+                             git2 higher 4 bits to 08H
+
+0093 E508            250                     MOV             A,08H
+
+A51 MACRO ASSEMBLER  DIGITS                                                               11/15/2017 18:41:38 PAGE     5
+
+0095 A22F            251                     MOV             C,g_DigitState.7
+
+0097 92E7            252                     MOV             ACC.7,C
+
+0099 A22E            253                     MOV             C,g_DigitState.6
+
+009B 92E6            254                     MOV             ACC.6,C
+
+009D F508            255                     MOV             08H,A
+
+009F 120000   F      256                     LCALL   KeDigits_Output
+
+00A2 020000   F      257                     LJMP    FINISH
+
+                     258                     
+
+00A5                 259     FINISH:
+
+00A5 D008            260                     POP             08H
+
+00A7 22              261                     RET
+
+                     262                     
+
+                     263                     
+
+                     264                     
+
+                     265                     
+
+                     266                     
+
+00A8                 267     Digits_StartBlink4:
+
+00A8 4326C0          268                     ORL             Digits_LastState,#11000000B
+
+00AB D223            269                     SETB    Digits_State.3
+
+00AD 22              270                     RET
+
+                     271                     
+
+00AE                 272     Digits_StartBlink3:
+
+00AE 432630          273                     ORL             Digits_LastState,#00110000B
+
+00B1 D222            274                     SETB    Digits_State.2
+
+00B3 22              275                     RET
+
+                     276                     
+
+00B4                 277     Digits_StartBlink2:
+
+00B4 43260C          278                     ORL             Digits_LastState,#00001100B
+
+00B7 D221            279                     SETB    Digits_State.1
+
+00B9 22              280                     RET
+
+                     281             
+
+00BA                 282     Digits_StartBlink1:
+
+00BA 432603          283                     ORL             Digits_LastState,#00000011B
+
+00BD D220            284                     SETB    Digits_State.0
+
+00BF 22              285                     RET
+
+                     286     
+
+                     287     
+
+00C0                 288     Digits_StopBlink4:
+
+00C0 C223            289                     CLR             Digits_State.3
+
+00C2 E525            290                     MOV             A,g_DigitState
+
+00C4 54C0            291                     ANL             A,#11000000B
+
+00C6 B4C00D          292                     CJNE    A,#11000000B,FINISHSTOP4                ;if bits 7,6 of g_DigitStat
+                             e is not 11, goto FINISHSTOP4
+
+00C9 E526            293                     MOV             A,Digits_LastState                              ;bits 7,6 o
+                             f g_DigitState is 11
+
+00CB 54C0            294                     ANL             A,#11000000B
+
+00CD B4C002          295                     CJNE    A,#11000000B,SWAPAGAIN4                 ;if bits 7,6 of Digits_Last
+                             State is not 11, goto SWAPAGAIN4
+
+00D0 8004            296                     SJMP    FINISHSTOP4                                             ;bits 7,6 o
+                             f Digits_LastState is 11
+
+00D2                 297     SWAPAGAIN4:
+
+00D2 1100     F      298                     ACALL   SWAP4
+
+00D4 8000            299                     SJMP    FINISHSTOP4
+
+00D6                 300     FINISHSTOP4:
+
+00D6 22              301                     RET
+
+                     302                     
+
+                     303                     
+
+                     304     
+
+00D7                 305     Digits_StopBlink3:
+
+00D7 C222            306                     CLR             Digits_State.2
+
+00D9 E525            307                     MOV             A,g_DigitState
+
+00DB 5430            308                     ANL             A,#00110000B
+
+00DD B4300D          309                     CJNE    A,#00110000B,FINISHSTOP3                ;if bits 5,4 of g_DigitStat
+                             e is not 11, goto FINISHSTOP4
+
+00E0 E526            310                     MOV             A,Digits_LastState                              ;bits 5,4  
+                             of g_DigitState is 11
+
+A51 MACRO ASSEMBLER  DIGITS                                                               11/15/2017 18:41:38 PAGE     6
+
+00E2 5430            311                     ANL             A,#00110000B
+
+00E4 B43002          312                     CJNE    A,#00110000B,SWAPAGAIN3                 ;if bits 5,4  of Digits_Las
+                             tState is not 11, goto SWAPAGAIN4
+
+00E7 8004            313                     SJMP    FINISHSTOP3                                             ;bits 5,4  
+                             of Digits_LastState is 11
+
+00E9                 314     SWAPAGAIN3:
+
+00E9 1100     F      315                     ACALL   SWAP3
+
+00EB 8000            316                     SJMP    FINISHSTOP3
+
+00ED                 317     FINISHSTOP3:
+
+00ED 22              318                     RET
+
+                     319                     
+
+                     320                     
+
+00EE                 321     Digits_StopBlink2:
+
+00EE C221            322                     CLR             Digits_State.1
+
+00F0 E525            323                     MOV             A,g_DigitState
+
+00F2 540C            324                     ANL             A,#00001100B
+
+00F4 B40C0D          325                     CJNE    A,#00001100B,FINISHSTOP2                ;if bits 3,2 of g_DigitStat
+                             e is not 11, goto FINISHSTOP4
+
+00F7 E526            326                     MOV             A,Digits_LastState                              ;bits 3,2 o
+                             f g_DigitState is 11
+
+00F9 540C            327                     ANL             A,#00001100B
+
+00FB B40C02          328                     CJNE    A,#00001100B,SWAPAGAIN2                 ;if bits 3,2 of Digits_Last
+                             State is not 11, goto SWAPAGAIN4
+
+00FE 8004            329                     SJMP    FINISHSTOP2                                             ;bits 3,2 o
+                             f Digits_LastState is 11
+
+0100                 330     SWAPAGAIN2:
+
+0100 1100     F      331                     ACALL   SWAP2
+
+0102 8000            332                     SJMP    FINISHSTOP2
+
+0104                 333     FINISHSTOP2:
+
+0104 22              334                     RET
+
+                     335                     
+
+                     336             
+
+0105                 337     Digits_StopBlink1:
+
+0105 C220            338                     CLR             Digits_State.0
+
+0107 E525            339                     MOV             A,g_DigitState
+
+0109 5403            340                     ANL             A,#00000011B
+
+010B B4030D          341                     CJNE    A,#00000011B,FINISHSTOP1                ;if bits 1,0 of g_DigitStat
+                             e is not 11, goto FINISHSTOP4
+
+010E E526            342                     MOV             A,Digits_LastState                              ;bits 1,0 o
+                             f g_DigitState is 11
+
+0110 5403            343                     ANL             A,#00000011B
+
+0112 B40302          344                     CJNE    A,#00000011B,SWAPAGAIN1                 ;if bits 1,0 of Digits_Last
+                             State is not 11, goto SWAPAGAIN4
+
+0115 8004            345                     SJMP    FINISHSTOP1                                             ;bits 1,0 o
+                             f Digits_LastState is 11
+
+0117                 346     SWAPAGAIN1:
+
+0117 1100     F      347                     ACALL   SWAP1
+
+0119 8000            348                     SJMP    FINISHSTOP1
+
+011B                 349     FINISHSTOP1:
+
+011B 22              350                     RET
+
+                     351     
+
+                     352     
+
+                     353     
+
+                     354                     
+
+                     355                     
+
+                     356     ;swap bits 7,6 of Digits_LastState and g_DigitState
+
+011C                 357     SWAP4:
+
+011C E525            358                     MOV             A,g_DigitState                          
+
+                     359                     
+
+011E A237            360                     MOV             C,Digits_LastState.7
+
+0120 922F            361                     MOV             g_DigitState.7,C
+
+                     362                     
+
+0122 A236            363                     MOV             C,Digits_LastState.6
+
+0124 922E            364                     MOV             g_DigitState.6,C
+
+                     365                     
+
+0126 A2E7            366                     MOV             C,ACC.7
+
+A51 MACRO ASSEMBLER  DIGITS                                                               11/15/2017 18:41:38 PAGE     7
+
+0128 9237            367                     MOV             Digits_LastState.7,C
+
+                     368                     
+
+012A A2E6            369                     MOV             C,ACC.6
+
+012C 9236            370                     MOV             Digits_LastState.6,C
+
+012E 22              371                     RET
+
+                     372                     
+
+                     373                     
+
+                     374                     
+
+                     375                     
+
+                     376                     
+
+                     377     ;swap bits 5,4 of Digits_LastState and g_DigitState
+
+012F                 378     SWAP3:
+
+012F E525            379                     MOV             A,g_DigitState                          
+
+                     380                     
+
+0131 A235            381                     MOV             C,Digits_LastState.5
+
+0133 922D            382                     MOV             g_DigitState.5,C
+
+                     383                     
+
+0135 A234            384                     MOV             C,Digits_LastState.4
+
+0137 922C            385                     MOV             g_DigitState.4,C
+
+                     386                     
+
+0139 A2E5            387                     MOV             C,ACC.5
+
+013B 9235            388                     MOV             Digits_LastState.5,C
+
+                     389                     
+
+013D A2E4            390                     MOV             C,ACC.4
+
+013F 9234            391                     MOV             Digits_LastState.4,C
+
+0141 22              392                     RET
+
+                     393                     
+
+                     394                     
+
+                     395     ;swap bits 3,2 of Digits_LastState and g_DigitState
+
+0142                 396     SWAP2:
+
+0142 E525            397                     MOV             A,g_DigitState                          
+
+                     398                     
+
+0144 A233            399                     MOV             C,Digits_LastState.3
+
+0146 922B            400                     MOV             g_DigitState.3,C
+
+                     401                     
+
+0148 A232            402                     MOV             C,Digits_LastState.2
+
+014A 922A            403                     MOV             g_DigitState.2,C
+
+                     404                     
+
+014C A2E3            405                     MOV             C,ACC.3
+
+014E 9233            406                     MOV             Digits_LastState.3,C
+
+                     407                     
+
+0150 A2E2            408                     MOV             C,ACC.2
+
+0152 9232            409                     MOV             Digits_LastState.2,C
+
+0154 22              410                     RET
+
+                     411                     
+
+                     412                     
+
+                     413                     
+
+                     414                     
+
+                     415     ;swap bits 1,0 of Digits_LastState and g_DigitState
+
+0155                 416     SWAP1:
+
+0155 E525            417                     MOV             A,g_DigitState                          
+
+                     418                     
+
+0157 A231            419                     MOV             C,Digits_LastState.1
+
+0159 9229            420                     MOV             g_DigitState.1,C
+
+                     421                     
+
+015B A230            422                     MOV             C,Digits_LastState.0
+
+015D 9228            423                     MOV             g_DigitState.0,C
+
+                     424                     
+
+015F A2E1            425                     MOV             C,ACC.1
+
+0161 9231            426                     MOV             Digits_LastState.1,C
+
+                     427                     
+
+0163 A2E0            428                     MOV             C,ACC.0
+
+0165 9230            429                     MOV             Digits_LastState.0,C
+
+0167 22              430                     RET
+
+                     431                     
+
+                     432                     
+
+A51 MACRO ASSEMBLER  DIGITS                                                               11/15/2017 18:41:38 PAGE     8
+
+                     433                     
+
+                     434     ;0.5s
+
+0168                 435     Timer_3:
+
+0168                 436     BLINK4:
+
+0168 302302          437                     JNB             Digits_State.3,BLINK3
+
+016B 1100     F      438                     ACALL   SWAP4
+
+                     439                     
+
+016D                 440     BLINK3:
+
+016D 302202          441                     JNB             Digits_State.2,BLINK2
+
+0170 1100     F      442                     ACALL   SWAP3
+
+                     443                     
+
+0172                 444     BLINK2:
+
+0172 302102          445                     JNB             Digits_State.1,BLINK1
+
+0175 1100     F      446                     ACALL   SWAP2
+
+                     447                     
+
+0177                 448     BLINK1:
+
+0177 302002          449                     JNB             Digits_State.0,BLINKFINISH
+
+017A 1100     F      450                     ACALL   SWAP1
+
+                     451                     
+
+017C                 452     BLINKFINISH:
+
+                     453     
+
+017C 22              454                     RET
+
+                     455                     
+
+                     456                     
+
+                     457                     
+
+                     458                     
+
+                     459                     
+
+                     460                     
+
+                     461                     END
+
+A51 MACRO ASSEMBLER  DIGITS                                                               11/15/2017 18:41:38 PAGE     9
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ACC. . . . . . . .  D ADDR   00E0H   A   
+BEEP_COUNT . . . .  N NUMB   0014H   A   
+BEEP_STATE . . . .  N NUMB   0012H   A   
+BEEP_TOTAL . . . .  N NUMB   0013H   A   
+BLINK1 . . . . . .  C ADDR   0177H   R   SEG=DIGITS
+BLINK2 . . . . . .  C ADDR   0172H   R   SEG=DIGITS
+BLINK3 . . . . . .  C ADDR   016DH   R   SEG=DIGITS
+BLINK4 . . . . . .  C ADDR   0168H   R   SEG=DIGITS
+BLINKFINISH. . . .  C ADDR   017CH   R   SEG=DIGITS
+CALCULATE_1. . . .  N NUMB   0075H   A   
+CALCULATE_2. . . .  N NUMB   0074H   A   
+CALCULATE_NUM. . .  N NUMB   0076H   A   
+CAL_STATE1 . . . .  B ADDR   0028H.0 A   
+CAL_STATE2 . . . .  B ADDR   0028H.1 A   
+CAL_STATE3 . . . .  B ADDR   0028H.2 A   
+DIGIT0 . . . . . .  C ADDR   0027H   R   SEG=DIGITS
+DIGIT1 . . . . . .  C ADDR   0046H   R   SEG=DIGITS
+DIGIT2 . . . . . .  C ADDR   0066H   R   SEG=DIGITS
+DIGIT3 . . . . . .  C ADDR   0085H   R   SEG=DIGITS
+DIGITS . . . . . .  C SEG    017DH       REL=UNIT
+DIGITS_INIT. . . .  C ADDR   0000H   R   SEG=DIGITS
+DIGITS_LASTSTATE .  N NUMB   0026H   A   
+DIGITS_LASTSTATE0.  B ADDR   0026H.0 A   
+DIGITS_LASTSTATE7.  B ADDR   0026H.7 A   
+DIGITS_STARTBLINK1  C ADDR   00BAH   R   SEG=DIGITS
+DIGITS_STARTBLINK2  C ADDR   00B4H   R   SEG=DIGITS
+DIGITS_STARTBLINK3  C ADDR   00AEH   R   SEG=DIGITS
+DIGITS_STARTBLINK4  C ADDR   00A8H   R   SEG=DIGITS
+DIGITS_STATE . . .  N NUMB   0024H   A   
+DIGITS_STATE0. . .  B ADDR   0024H.7 A   
+DIGITS_STATE7. . .  B ADDR   0024H.0 A   
+DIGITS_STOPBLINK1.  C ADDR   0105H   R   SEG=DIGITS
+DIGITS_STOPBLINK2.  C ADDR   00EEH   R   SEG=DIGITS
+DIGITS_STOPBLINK3.  C ADDR   00D7H   R   SEG=DIGITS
+DIGITS_STOPBLINK4.  C ADDR   00C0H   R   SEG=DIGITS
+DIGITS_SWEEP . . .  C ADDR   001FH   R   SEG=DIGITS
+FINISH . . . . . .  C ADDR   00A5H   R   SEG=DIGITS
+FINISHINIT . . . .  C ADDR   001CH   R   SEG=DIGITS
+FINISHSTOP1. . . .  C ADDR   011BH   R   SEG=DIGITS
+FINISHSTOP2. . . .  C ADDR   0104H   R   SEG=DIGITS
+FINISHSTOP3. . . .  C ADDR   00EDH   R   SEG=DIGITS
+FINISHSTOP4. . . .  C ADDR   00D6H   R   SEG=DIGITS
+G_DIGIT1 . . . . .  N NUMB   0011H   A   
+G_DIGIT2 . . . . .  N NUMB   0010H   A   
+G_DIGITSTATE . . .  N NUMB   0025H   A   
+G_DIGITSTATE0. . .  B ADDR   0025H.7 A   
+G_DIGITSTATE7. . .  B ADDR   0025H.0 A   
+G_LED1 . . . . . .  B ADDR   0020H.0 A   
+G_LED2 . . . . . .  B ADDR   0020H.1 A   
+G_LED3 . . . . . .  B ADDR   0020H.2 A   
+G_LED4 . . . . . .  B ADDR   0020H.3 A   
+G_LED5 . . . . . .  B ADDR   0020H.4 A   
+G_LED6 . . . . . .  B ADDR   0020H.5 A   
+G_LED7 . . . . . .  B ADDR   0020H.6 A   
+G_LED8 . . . . . .  B ADDR   0020H.7 A   
+G_LEDS . . . . . .  N NUMB   0020H   A   
+HOMEWORK_COUNT . .  N NUMB   007BH   A   
+HOMEWORK_SECOND. .  N NUMB   0077H   A   
+HOMEWORK_SECOND1 .  N NUMB   007AH   A   
+HOMEWORK_SECOND2 .  N NUMB   0079H   A   
+A51 MACRO ASSEMBLER  DIGITS                                                               11/15/2017 18:41:38 PAGE    10
+
+HOMEWORK_SECOND3 .  N NUMB   0078H   A   
+HOMEWORK_STATE . .  N NUMB   0027H   A   
+HOMEWORK_STATE0. .  B ADDR   0027H.7 A   
+HOMEWORK_STATE7. .  B ADDR   0027H.0 A   
+INIT_BEEP. . . . .  B ADDR   0022H.3 A   
+INIT_DIGITS. . . .  B ADDR   0023H.2 A   
+INIT_KEBEEP. . . .  B ADDR   0022H.0 A   
+INIT_KEDIGITS. . .  B ADDR   0023H.1 A   
+INIT_KEKEYS. . . .  B ADDR   0022H.1 A   
+INIT_KELED . . . .  B ADDR   0021H.1 A   
+INIT_KELEDS. . . .  B ADDR   0022H.6 A   
+INIT_KETIMER2. . .  B ADDR   0022H.5 A   
+INIT_KEYS. . . . .  B ADDR   0023H.0 A   
+INIT_LED . . . . .  B ADDR   0022H.2 A   
+INIT_LEDS. . . . .  B ADDR   0022H.7 A   
+INIT_TIMER . . . .  B ADDR   0022H.4 A   
+INT_C_OLD. . . . .  B ADDR   0021H.0 A   
+KEDIGITS_INIT. . .  C ADDR   -----       EXT
+KEDIGITS_OUTPUT. .  C ADDR   -----       EXT
+KEYS_LASTCODE. . .  N NUMB   0015H   A   
+LEDS_PATTERN . . .  N NUMB   0016H   A   
+PASSWORD_PSW1. . .  N NUMB   007DH   A   
+PASSWORD_PSW2. . .  N NUMB   007CH   A   
+PASSWORD_STATE . .  N NUMB   007EH   A   
+SWAP1. . . . . . .  C ADDR   0155H   R   SEG=DIGITS
+SWAP2. . . . . . .  C ADDR   0142H   R   SEG=DIGITS
+SWAP3. . . . . . .  C ADDR   012FH   R   SEG=DIGITS
+SWAP4. . . . . . .  C ADDR   011CH   R   SEG=DIGITS
+SWAPAGAIN1 . . . .  C ADDR   0117H   R   SEG=DIGITS
+SWAPAGAIN2 . . . .  C ADDR   0100H   R   SEG=DIGITS
+SWAPAGAIN3 . . . .  C ADDR   00E9H   R   SEG=DIGITS
+SWAPAGAIN4 . . . .  C ADDR   00D2H   R   SEG=DIGITS
+TEST3_MAINSTATE. .  N NUMB   007FH   A   
+TIMER_3. . . . . .  C ADDR   0168H   R   SEG=DIGITS
+TIMER_CHECKCTRL. .  C ADDR   -----       EXT
+TIMER_CNT1 . . . .  N NUMB   0018H   A   
+TIMER_CNT8 . . . .  N NUMB   001FH   A   
+TIMER_CTRL . . . .  N NUMB   0017H   A   
+TIMER_INIT . . . .  C ADDR   -----       EXT
+TIMER_START. . . .  C ADDR   -----       EXT
+TIMER_STOP . . . .  C ADDR   -----       EXT
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

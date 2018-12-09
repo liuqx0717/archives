@@ -1,0 +1,11 @@
+create proc addreq @ip char(16) as
+
+	update requests
+	set cnt=cnt+1, lastreq=SYSDATETIME()
+	where ip=@ip;
+
+	if @@rowcount=0 begin
+		insert requests 
+		values(@ip,0,1,SYSDATETIME());
+	end
+go

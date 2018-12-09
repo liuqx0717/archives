@@ -1,0 +1,4 @@
+EXTRN	CODE	(KeLED_init)
+EXTRN	CODE	(KeLED_on)
+EXTRN	CODE	(KeLED_off)
+EXTRN	CODE	(KeLED_switch)

@@ -1,0 +1,11 @@
+create proc submit @token char(16), @_a varchar(5000), @_a_addi varchar(5000) as
+declare @d int;
+declare @s datetime2;
+declare @e datetime2;
+select @d=duration,@s=datestart from answers where token=@token;
+if @d=0 begin
+	set @e=SYSDATETIME();
+	update answers
+	set dateend=@e, duration=DATEDIFF(s,@s,@e),answer=@_a,addi_answer=@_a_addi
+	where token=@token;
+end
